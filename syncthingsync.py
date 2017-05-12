@@ -108,7 +108,7 @@ def main():
 
     result = trigger_scan(folders)
     if not result:
-        print('error while triggering ')
+        print('error while triggering scan')
         sys.exit(1)
 
     print('waiting %d seconds' % WAIT_S_AFTER_SCAN)
