@@ -1,2 +1,2 @@
 # syncthingsync
-Forces Syncthing devices to sync and waits for completion.
+Forces Syncthing devices to sync a folder and waits for completion.

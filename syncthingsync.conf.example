@@ -1,0 +1,10 @@
+[devices]
+devices = a,b
+
+[a]
+api = http://a:8384/rest
+key = SUPERSECRET
+
+[b]
+api = http://b:8384/rest
+key = SUPERSECRET
