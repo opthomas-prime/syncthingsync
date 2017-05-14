@@ -1,5 +1,7 @@
-[devices]
+[general]
 devices = a,b
+s_before_status_check = 1
+s_interval_status_check = 1
 
 [a]
 api = http://a:8384/rest
