@@ -58,4 +58,4 @@ def serve(conf):
     global sts_conf
     sts_conf = conf
     sys.argv = sys.argv[:1]
-    bottle.run(host='0.0.0.0', port=8080, server='gunicorn', workers=1)
+    bottle.run(host='0.0.0.0', port=8080, server='gunicorn', workers=8)
