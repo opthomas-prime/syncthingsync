@@ -19,7 +19,8 @@ def get_args():
     from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument('--config', default=DEF_CONF_FILE, help='config file (defaults to %s)' % DEF_CONF_FILE)
-    parser.add_argument('folder', help='folder to sync (label)')
+    parser.add_argument('--webservice', help='start as webservice', action='store_true', default=False)
+    parser.add_argument('--folder', help='folder to sync (label) - not needed in webservice mode')
     return parser.parse_args()
 
 
@@ -94,6 +95,15 @@ def main():
         print('error while reading config file')
         sys.exit(1)
 
+    if args.webservice:
+        import syncthingsyncws
+        syncthingsyncws.serve(conf)
+        sys.exit(0)
+
+    if not args.folder:
+        print('no folder specified')
+        sys.exit(1)
+
     conns = []
     for device in conf['general']['devices'].split(','):
         conns.append(conf[device.strip()])
@@ -112,6 +122,10 @@ def main():
             print('found \'%s\'' % folder_id)
             folder_locs.append((conn, folder_id))
             # e.g. (OrderedDict([('api', 'http://a:8384/rest'), ('key', 'SUPERSECRET')]), 'abcde-abcde')
+
+    if len(folder_locs) == 0:
+        print('folder not found')
+        sys.exit(1)
 
     for folder_loc in folder_locs:
         print('triggering scan on %s / \'%s\'' % (folder_loc[0]['api'], folder_loc[1]))
