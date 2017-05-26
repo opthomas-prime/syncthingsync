@@ -25,7 +25,7 @@ def sync(folder):
 
     folder_locs = []
     for conn in conns:
-        status, folder_id = sts.find_folder_id(folder, conn['api'], conn['key'])
+        status, folder_id = sts.check_folder_id(folder, conn['api'], conn['key'])
         if not status:
             return bottle.HTTPResponse(status=500, body='error while looking up folder id on %s\n' % conn['api'])
         if folder_id:

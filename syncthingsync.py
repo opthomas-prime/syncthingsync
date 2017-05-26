@@ -20,7 +20,7 @@ def get_args():
     parser = ArgumentParser()
     parser.add_argument('--config', default=DEF_CONF_FILE, help='config file (defaults to %s)' % DEF_CONF_FILE)
     parser.add_argument('--webservice', help='start as webservice', action='store_true', default=False)
-    parser.add_argument('--folder', help='folder to sync (label) - not needed in webservice mode')
+    parser.add_argument('--folder', help='folder to sync (id) - not needed in webservice mode')
     return parser.parse_args()
 
 
@@ -34,14 +34,14 @@ def load_conf(conf_file):
     return conf._sections
 
 
-def find_folder_id(folder_name, api, key):
+def check_folder_id(folder_id, api, key):
     headers = {'X-API-Key': key}
     try:
         r = requests.get(api + '/system/config', headers=headers)
         if r.status_code != 200:
             return False, None
         for entry in json.loads(r.text)['folders']:
-            if entry['label'] == folder_name:
+            if entry['id'] == folder_id:
                 return True, entry['id']
         return True, None
     except Exception as e:
@@ -112,7 +112,7 @@ def main():
     folder_locs = []
     for conn in conns:
         print('looking up \'%s\' on %s' % (args.folder, conn['api']))
-        status, folder_id = find_folder_id(args.folder, conn['api'], conn['key'])
+        status, folder_id = check_folder_id(args.folder, conn['api'], conn['key'])
         if not status:
             print('error while looking up folder id')
             sys.exit(1)
