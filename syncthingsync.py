@@ -63,7 +63,6 @@ def trigger_scan(location):
 
 def synced(status):
     if status['globalBytes'] == status['localBytes'] \
-            and status['globalDeleted'] == status['localDeleted'] \
             and status['globalFiles'] == status['localFiles'] \
             and status['inSyncBytes'] == status['localBytes'] \
             and status['inSyncFiles'] == status['localFiles'] \
